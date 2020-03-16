@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.globalmatic">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,18 +12,13 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".IdeaListActivity"
-            android:label="Innovation Ideas"/>
-
-
-
-
-
-
+            android:label="Innovation Ideas"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".IdeaDetailActivity"
             android:label="@string/title_task_detail"
-            android:parentActivityName=".IdeaListActivity">
-
+            android:parentActivityName=".IdeaListActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".IdeaListActivity" />
@@ -30,7 +26,8 @@
         <activity
             android:name=".IdeaCreateActivity"
             android:label="A New Thought"
-            android:parentActivityName=".IdeaListActivity">
+            android:parentActivityName=".IdeaListActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".IdeaListActivity" />

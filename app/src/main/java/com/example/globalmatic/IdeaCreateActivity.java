@@ -8,8 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.alexr.ideamanager.helpers.SampleContent;
-import com.example.alexr.ideamanager.models.Idea;
+import com.example.globalmatic.Model.Idea;
+import com.example.globalmatic.helpers.SampleContent;
+
 
 public class IdeaCreateActivity extends AppCompatActivity {
 

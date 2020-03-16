@@ -12,10 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.alexr.ideamanager.helpers.SampleContent;
-import com.example.alexr.ideamanager.models.Idea;
+import com.example.globalmatic.Model.Idea;
+import com.example.globalmatic.helpers.SampleContent;
 
 import java.util.List;
+
 
 public class IdeaListActivity extends AppCompatActivity {
 

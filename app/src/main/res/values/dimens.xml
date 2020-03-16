@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_margin">12sp</dimen>
+    <dimen name="app_bar_height">24sp</dimen>
+    <dimen name="floating_marging">10sp</dimen>
+    <dimen name="fab_margin">10dp</dimen>
 </resources>

@@ -1,6 +1,8 @@
 package com.example.globalmatic.helpers;
 
-import com.example.alexr.ideamanager.models.Idea;
+
+import com.example.globalmatic.Model.Idea;
+
 import java.util.ArrayList;
 import java.util.List;
 
