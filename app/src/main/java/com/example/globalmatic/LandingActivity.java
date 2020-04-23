@@ -2,9 +2,16 @@ package com.example.globalmatic;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.globalmatic.Services.MesageService;
+import com.example.globalmatic.Services.ServiceBuilder;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LandingActivity extends AppCompatActivity {
 
@@ -13,8 +20,24 @@ public class LandingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
-        TextView message = (TextView)findViewById(R.id.message);
-        message.setText("This is hardcoded, but thanks for visiting the app!  Our next hackathon is scheduled for the end of Q3.  We hope to see you there, be sure to add your ideas to the app!");
+        MesageService taskService = ServiceBuilder.buildService(MesageService.class); //this acts as implementation to
+        // the interface that maps to our RESTFUL endpoints , we can use this to make those calls i.e GET
+
+
+        Call<String> call = taskService.getMessages(); //asyncronous task that RETFOFIT manages for us
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> request, Response<String> response) { //method which handles success scenario
+                ((TextView)findViewById(R.id.message)).setText(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<String> request, Throwable t) {
+                ((TextView)findViewById(R.id.message)).setText("Request Failed"); //method which handles failure scenario
+            }
+        });
+
     }
 
     public void GetStarted(View view){

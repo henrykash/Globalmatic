@@ -3,10 +3,13 @@ package com.example.globalmatic;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.design.widget.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+
+import com.example.globalmatic.Services.IdeaService;
+import com.example.globalmatic.Services.ServiceBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,10 @@ import com.example.globalmatic.Model.Idea;
 import com.example.globalmatic.helpers.SampleContent;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class IdeaListActivity extends AppCompatActivity {
@@ -47,8 +54,21 @@ public class IdeaListActivity extends AppCompatActivity {
         if (findViewById(R.id.idea_detail_container) != null) {
             mTwoPane = true;
         }
+        IdeaService ideaService = ServiceBuilder.buildService(IdeaService.class);
+        Call<List<Idea>> request = ideaService.getIdeas();
 
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(SampleContent.IDEAS));
+        request.enqueue(new Callback<List<Idea>>() {
+            @Override
+            public void onResponse(Call<List<Idea>> request, Response<List<Idea>> response) {
+                recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(response.body()));
+            }
+
+            @Override
+            public void onFailure(Call<List<Idea>> request, Throwable t) {
+                ((TextView)findViewById(R.id.message)).setText("Request Failed");
+            }
+        });
+       // recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(SampleContent.IDEAS));
     }
 
 //region Adapter Region
