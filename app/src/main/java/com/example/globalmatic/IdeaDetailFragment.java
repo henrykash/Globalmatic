@@ -3,6 +3,9 @@ package com.example.globalmatic;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
+import com.example.globalmatic.Services.IdeaService;
+import com.example.globalmatic.Services.ServiceBuilder;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -11,9 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.globalmatic.Model.Idea;
 import com.example.globalmatic.helpers.SampleContent;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class IdeaDetailFragment extends Fragment {
@@ -48,17 +56,28 @@ public class IdeaDetailFragment extends Fragment {
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             Activity activity = this.getActivity();
             final CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+            IdeaService ideaService = ServiceBuilder.buildService(IdeaService.class);
+            Call<Idea> request = ideaService.getIdea(getArguments().getInt(ARG_ITEM_ID));
 
-            mItem = SampleContent.getIdeaById(getArguments().getInt(ARG_ITEM_ID));
+            request.enqueue(new Callback<Idea>() {
+                @Override
+                public void onResponse(Call<Idea> request, Response<Idea> response) {
+                    mItem = response.body();
 
-            ideaName.setText(mItem.getName());
-            ideaDescription.setText(mItem.getDescription());
-            ideaOwner.setText(mItem.getOwner());
-            ideaStatus.setText(mItem.getStatus());
+                    ideaName.setText(mItem.getName());
+                    ideaDescription.setText(mItem.getDescription());
+                    ideaOwner.setText(mItem.getOwner());
+                    ideaStatus.setText(mItem.getStatus());
 
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.getName());
-            }
+                    if (appBarLayout != null) { appBarLayout.setTitle(mItem.getName()); }
+                }
+
+                @Override
+                public void onFailure(Call<Idea> request, Throwable t) {
+                    Toast.makeText(context, "Failed to retrieve item.", Toast.LENGTH_SHORT).show();;
+                }
+            });
+
         }
 
         updateIdea.setOnClickListener(new View.OnClickListener() {

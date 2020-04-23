@@ -68,12 +68,11 @@ public class IdeaListActivity extends AppCompatActivity {
                 ((TextView)findViewById(R.id.message)).setText("Request Failed");
             }
         });
-       // recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(SampleContent.IDEAS));
+
     }
 
 //region Adapter Region
-    public class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+    public class SimpleItemRecyclerViewAdapter extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final List<Idea> mValues;
 
